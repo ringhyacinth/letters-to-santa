@@ -1,0 +1,52 @@
+/* Compact first screen; the WebGL camera measures title/apron bounds. */
+.game-brand { display:none; }
+:root { --santa-top-space:var(--safe-area-inset-top, env(safe-area-inset-top, 0px)); }
+html[data-build="minitool"] { --santa-top-space:96px; }
+.game-hud { height:calc(46px + var(--santa-top-space)); padding-top:var(--santa-top-space); padding-bottom:0; }
+.hud-progress button { width:34px; height:32px; padding:0; justify-content:center; }
+.hud-progress button span { display:none; }
+.hud-progress button b { background:transparent; font-size:12px; }
+.hud-progress button.current b { color:var(--gold); background:transparent; }
+.hud-count { font-size:12px; }
+.stage { height:calc(100vh - 90px - var(--santa-top-space)); min-height:350px; max-height:700px; }
+@supports(height:100svh) { .stage { height:calc(100svh - 90px - var(--santa-top-space)); } }
+.title-sign { top:25px; width:76%; max-width:305px; }
+.sign-board { padding:8px 12px 9px; }
+.sign-board h1 { font-size:22px; margin-top:4px; line-height:1.18; }
+.sign-kicker { font-size:8px; letter-spacing:2px; }
+.valance { height:44px; }
+.ornament { top:-30px; }
+.apron { bottom:30px; }
+.apron-head { margin-bottom:7px; }
+.coach { bottom:calc(100% + 8px); padding:5px 11px; font-size:11px; }
+.planet-zoom { bottom:175px; }
+.card-stage { padding-top:8px; padding-bottom:48px; }
+.card-stage .speech { left:4%; top:18px; width:48%; padding:15px 9px; border-radius:28px; font-family:inherit; font-size:12px; line-height:1.65; transform:rotate(-3deg); }
+.reply-open { position:absolute; bottom:12px; right:12px; padding:10px 14px; border:1px solid #e8b443; border-radius:20px; color:#fffaf0; background:#a62529; font-weight:800; font-size:13px; cursor:pointer; }
+.card-stage .santa-scene { cursor:pointer; }
+.reply-gallery { position:fixed; z-index:200; inset:0; top:0; right:0; bottom:0; left:0; background:rgba(8,25,18,.88); overflow-y:auto; padding:20px 12px; padding-top:calc(20px + var(--santa-top-space)); overscroll-behavior:contain; }
+.reply-gallery[hidden] { display:none; }
+.reply-gallery-panel { max-width:600px; margin:0 auto; padding:20px; background:#fffaf0; border-radius:18px; color:#26352c; }
+.reply-gallery h2 { margin:5px 0 10px; font-size:22px; }
+.reply-gallery p { font-size:13px; line-height:1.7; }
+.reply-gallery-close { position:sticky; top:0; z-index:2; display:block; margin:0 0 12px auto; min-height:40px; padding:8px 16px; background:#163f2f; color:#fffaf0; border:0; border-radius:20px; cursor:pointer; }
+.reply-gallery figure { margin:20px 0; }
+.reply-gallery img { display:block; width:100%; height:auto; border:1px solid #e0d2b6; }
+.reply-gallery figcaption { padding-top:8px; font-size:13px; font-weight:700; }
+.reply-source { overflow-wrap:break-word; word-break:break-word; font-size:11px!important; color:#66705f; }
+.author-follow { margin:18px 16px 4px; padding:15px; border:1px solid #dccaa5; border-radius:12px; text-align:center; background:#fffaf0; }
+.author-follow[hidden] { display:none; }
+.author-follow p { margin:0 0 10px; font-size:12px; line-height:1.6; }
+.author-follow button { min-height:42px; padding:9px 22px; border:0; border-radius:24px; color:white; background:#b3262c; font-weight:800; cursor:pointer; }
+.author-follow button:disabled { opacity:.65; }
+.author-follow small { display:block; margin-top:7px; line-height:1.5; }
+@media(max-width:599px) { html[data-build="minitool"] .game-hud { padding-left:48px; padding-right:48px; } }
+@media(max-width:370px) { .sign-board h1{font-size:20px} .hud-right{gap:5px} .hud-count{font-size:11px} .music-toggle{width:30px;height:30px} .apron-head span{font-size:10px} .chip{font-size:11px} html[data-build="minitool"] .game-hud{padding-left:40px;padding-right:40px} }
+@media(max-width:599px) { html[data-build="minitool"] .game-hud { padding-left:var(--santa-left-gap,80px); padding-right:16px; } }
+.apron-head { justify-content:space-between; }
+.reply-gallery { opacity:0; transition:opacity .2s ease; }
+.reply-gallery.is-open { opacity:1; }
+.reply-gallery-panel { transform:translateY(12px); transition:transform .22s cubic-bezier(.2,.7,.2,1); }
+.reply-gallery.is-open .reply-gallery-panel { transform:translateY(0); }
+.reply-gallery img { aspect-ratio:900/1273; background:#f1eadb; }
+@media(prefers-reduced-motion:reduce) { .reply-gallery,.reply-gallery-panel { transition:none; transform:none; } }
