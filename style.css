@@ -504,4 +504,95 @@ html:not(.supports-flex-gap) .sheet-when dt svg { margin-right: 3px; }
 @keyframes postmark-in { from { opacity: 0; transform: rotate(-14deg) scale(1.6); } to { opacity: 1; transform: rotate(-14deg) scale(1); } }
 
 @keyframes toast-in { 0% { opacity: 0; transform: translate(-50%, -14px) scale(.82); } 60% { opacity: 1; transform: translate(-50%, 2px) scale(1.04); } 100% { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+
+/* =========================================================================
+   Mini-tool container layout (html[data-build="web"]).
+   The page runs full screen under the container's status bar and its button row
+   (back on the left, author + share on the right). --santa-top-space reserves both:
+   a safe default here, narrowed by platform.ts once getWindowInfo answers.
+   ========================================================================= */
+:root { --santa-top-space: 0px; --safe-bottom: 0px; --safe-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px)); --gutter: 16px; }
+html[data-build="web"] { --santa-top-space: env(safe-area-inset-top, 0px); }
+
+/* header: its own row under the container buttons; the band above it keeps the paper colour */
+html[data-build="web"] .game-hud { height: 102px; height: calc(var(--santa-top-space) + 48px); padding: 0 var(--gutter); padding-top: var(--santa-top-space); }
+html[data-build="web"] .hud-count { font-size: 12px; }
+/* few words on the first screen: no brand (the title board says it), chapter pills show numbers only */
+html[data-build="web"] .game-brand { display: none; }
+html[data-build="web"] .hud-progress button { justify-content: center; width: 34px; height: 32px; padding: 0; }
+html[data-build="web"] .hud-progress button span { display: none; }
+html[data-build="web"] .hud-progress button b { font-size: 12px; background: transparent; }
+html[data-build="web"] .hud-progress button.current b { color: var(--gold); background: transparent; }
+html[data-build="web"] .sign-kicker { display: none; }
+
+/* first screen: header + stage + a peek of the next section, above the home indicator */
+html[data-build="web"] .stage { height: calc(100vh - 188px); height: calc(100vh - var(--santa-top-space) - 84px - var(--safe-bottom)); min-height: 380px; max-height: 720px; }
+@supports (height: 100svh) { html[data-build="web"] .stage { height: calc(100svh - var(--santa-top-space) - 84px - var(--safe-bottom)); } }
+html[data-build="web"] .title-sign { top: 25px; width: 76%; max-width: 305px; }
+html[data-build="web"] .sign-board { padding: 8px 12px 9px; }
+html[data-build="web"] .sign-board h1 { margin-top: 4px; font-size: 22px; line-height: 1.18; }
+html[data-build="web"] .sign-kicker { font-size: 8px; letter-spacing: 2px; }
+html[data-build="web"] .valance { height: 44px; }
+html[data-build="web"] .ornament { top: -30px; }
+/* filters sit on a dark card, so 3D flight lines behind them don't show through the gaps */
+.chip-break { flex-basis: 100%; height: 0; }
+/* the break sits on a line of its own, so take back the row gap it adds */
+html.supports-flex-gap .chip-break { margin-top: -6px; }
+html.supports-flex-gap[data-build="web"] .chip-break { margin-top: -7px; }
+html:not(.supports-flex-gap) .verdict-chips > .chip-break { margin: 0; }
+html[data-build="web"]:not(.supports-flex-gap) .verdict-chips > .chip { margin: 0 3px 6px; }
+html[data-build="web"] .apron { left: var(--gutter); right: var(--gutter); bottom: 24px; padding: 10px 8px 11px; border-radius: 14px; background: rgba(7,32,22,.72); box-shadow: inset 0 0 0 1px rgba(232,180,67,.42), 0 8px 18px rgba(0,0,0,.28); }
+html[data-build="web"] .apron-head { justify-content: space-between; margin: 0 2px 9px; }
+html[data-build="web"] .apron-head b { font-size: 14px; letter-spacing: .5px; }
+html[data-build="web"] .verdict-chips { justify-content: center; gap: 7px 5px; }
+html[data-build="web"] .chip { gap: 4px; padding: 0 8px 0 7px; }
+html[data-build="web"] .coach { bottom: calc(100% + 10px); padding: 5px 11px; font-size: 11px; }
+/* zoom buttons: smaller, up beside the globe and clear of the curtain tie-back */
+html[data-build="web"] .planet-zoom { right: 38px; right: calc(var(--gutter) + 22px); top: 50%; bottom: auto; transform: translateY(-50%); gap: 7px; }
+html[data-build="web"] .planet-zoom button { width: 29px; height: 29px; font-size: 16px; box-shadow: 0 0 0 1.5px var(--gold), 0 2px 0 1.5px rgba(0,0,0,.32); }
+
+/* fixed layers stay out of the container's top area and above the home indicator */
+html[data-build="web"] .game-toast { top: 160px; top: calc(var(--santa-top-space) + 56px); }
+html[data-build="web"] .sheet-body { padding-bottom: 18px; padding-bottom: calc(18px + var(--safe-bottom)); }
+html[data-build="web"] .game-footer { padding-bottom: 24px; padding-bottom: calc(24px + var(--safe-bottom)); }
+
+@media (max-width: 370px) {
+  html[data-build="web"] { --gutter: 12px; }
+  html[data-build="web"] .sign-board h1 { font-size: 20px; }
+  html[data-build="web"] .hud-right { gap: 5px; }
+  html[data-build="web"] .hud-count { font-size: 11px; }
+  html[data-build="web"] .music-toggle { width: 30px; height: 30px; }
+  html[data-build="web"] .apron-head span { font-size: 10px; }
+  html[data-build="web"] .chip { font-size: 11px; }
+}
+
+/* ---------- interlude: "看回信样本" (both builds; gallery.js opens the overlay) ---------- */
+.card-stage { padding-top: 8px; padding-bottom: 48px; }
+.card-stage .speech { left: 4%; top: 18px; width: 48%; padding: 15px 9px; border-radius: 28px; font-family: inherit; font-size: 12px; line-height: 1.65; transform: rotate(-3deg); }
+.reply-open { position: absolute; z-index: 2; right: 12px; bottom: 12px; padding: 10px 14px; border: 1px solid #e8b443; border-radius: 20px; color: #fffaf0; background: #a62529; font-size: 13px; font-weight: 800; cursor: pointer; }
+.card-stage .santa-scene { cursor: pointer; }
+
+/* reply-sample overlay (markup from gallery.js). The top border keeps its scroll area,
+   and the sticky close button, below the container's buttons. */
+.reply-gallery { position: fixed; z-index: 200; top: 0; right: 0; bottom: 0; left: 0; overflow-y: auto; overscroll-behavior: contain; padding: 14px 12px; padding-bottom: calc(20px + var(--safe-bottom)); border-top: var(--santa-top-space) solid rgba(8,25,18,.88); background: rgba(8,25,18,.88); opacity: 0; transition: opacity .2s ease; }
+.reply-gallery[hidden] { display: none; }
+.reply-gallery.is-open { opacity: 1; }
+.reply-gallery-panel { max-width: 600px; margin: 0 auto; padding: 20px; border-radius: 18px; color: #26352c; background: #fffaf0; transform: translateY(12px); transition: transform .22s cubic-bezier(.2,.7,.2,1); }
+.reply-gallery.is-open .reply-gallery-panel { transform: translateY(0); }
+.reply-gallery h2 { margin: 5px 0 10px; font-size: 22px; }
+.reply-gallery p { font-size: 13px; line-height: 1.7; }
+.reply-gallery-close { position: -webkit-sticky; position: sticky; top: 0; z-index: 2; display: block; min-height: 40px; margin: 0 0 12px auto; padding: 8px 16px; border: 0; border-radius: 20px; color: #fffaf0; background: #163f2f; cursor: pointer; }
+.reply-gallery figure { margin: 20px 0; }
+.reply-gallery img { display: block; width: 100%; height: auto; border: 1px solid #e0d2b6; background: #f1eadb; }
+.reply-gallery figcaption { padding-top: 8px; font-size: 13px; font-weight: 700; }
+.reply-source { overflow-wrap: break-word; word-break: break-word; color: #66705f; font-size: 11px !important; }
+@media (prefers-reduced-motion: reduce) { .reply-gallery, .reply-gallery-panel { transition: none; transform: none; } }
+
+/* ---------- footer: follow the author (follow.js, mini-tool 9.51+) ---------- */
+.author-follow { margin: 18px 16px 4px; padding: 15px; border: 1px solid #dccaa5; border-radius: 12px; text-align: center; background: #fffaf0; }
+.author-follow[hidden] { display: none; }
+.author-follow p { margin: 0 0 10px; font-size: 12px; line-height: 1.6; }
+.author-follow button { min-height: 42px; padding: 9px 22px; border: 0; border-radius: 24px; color: white; background: #b3262c; font-weight: 800; cursor: pointer; }
+.author-follow button:disabled { opacity: .65; }
+.author-follow small { display: block; margin-top: 7px; line-height: 1.5; }
 /*$vite$:1*/
